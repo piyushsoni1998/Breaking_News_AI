@@ -662,6 +662,16 @@ img { max-width: 100%; }
 .footer-brand { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.7); }
 .footer-meta  { font-size: 12px; }
 
+/* ─── Touch device overrides — disable hover-state layout shifts ────────── */
+@media (hover: none) {
+  .news-item:hover { padding-left: 20px; }
+  .cat-row:hover   { padding-left: 0; }
+  .btn-primary:hover  { transform: none; box-shadow: none; }
+  .btn-refresh:hover  { transform: none; box-shadow: none; }
+  .btn-back:hover     { background: none; color: var(--text-3); }
+  .btn-load-more:hover { background: var(--white); color: var(--text-3); }
+}
+
 /* ─── Responsive ──────────────────────────────────────────────────────────── */
 
 /* ── Tablet (≤ 1024px) ───────────────────────────────────────────────────── */
@@ -731,10 +741,14 @@ img { max-width: 100%; }
   .news-item { padding: 20px 0 20px 14px; }
   .news-item:first-child { padding-top: 24px; }
   .news-title { font-size: 16px; }
+  .news-item.featured .news-title { font-size: 18px; }  /* cap featured size on mobile */
   .news-preview { font-size: 13px; -webkit-line-clamp: 3; }
   .news-actions { gap: 8px; flex-wrap: wrap; }
   .btn-read   { font-size: 12px; }
   .btn-source { font-size: 12px; }
+
+  /* Load more — full-width tap target */
+  .btn-load-more { width: 100%; }
 
   /* Article overlay */
   .article-nav  { padding: 12px 16px; gap: 8px; }
@@ -756,6 +770,7 @@ img { max-width: 100%; }
 
   /* About */
   .about-hero    { padding: 56px 20px; }
+  .about-hero-desc { font-size: 15px; }
   .about-section { padding: 48px 20px; }
   .about-stat-num { font-size: 32px; }
 
@@ -774,6 +789,9 @@ img { max-width: 100%; }
 
 /* ── Small phones (≤ 480px) ──────────────────────────────────────────────── */
 @media (max-width: 480px) {
+  /* Toast — stretch edge to edge so it never overflows */
+  .toast-container { right: 12px; left: 12px; }
+  .toast { max-width: 100%; }
   /* KPI — 2 per row */
   .kpi-strip  { flex-wrap: wrap; overflow-x: visible; }
   .kpi-item   {
@@ -1570,11 +1588,14 @@ function setCatFromSidebar(cat) {
 function scrollToFeed() { document.getElementById('feedAnchor').scrollIntoView({ behavior: 'smooth' }); }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
+const PAGE_NAV_ORDER = ['home', 'trends', 'categories', 'about'];
 function showPage(id, triggerEl) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(b => b.classList.remove('active'));
-  if (triggerEl) triggerEl.classList.add('active');
+  // Sync ALL nav buttons (desktop + mobile) by position index so both stay in step
+  const idx = PAGE_NAV_ORDER.indexOf(id);
+  document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  document.querySelectorAll('.mobile-nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (id === 'trends')     { loadTrends(); if (!S.items.length) loadFeed(true); }
   if (id === 'categories') { loadStats(); }
