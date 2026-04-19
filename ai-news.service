@@ -1,0 +1,47 @@
+[Unit]
+Description=AI Pulse — Global AI Intelligence Agent
+# Wait for network to be fully online before starting (required for API calls)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+
+# Must match where main.py and .env live
+WorkingDirectory=/home/ubuntu/ai-news-agent/backend
+
+# Full path to the venv's uvicorn — do not use 'python -m uvicorn'
+# --workers 1 is REQUIRED: APScheduler does not work correctly with multiple workers
+ExecStart=/home/ubuntu/ai-news-agent/backend/venv/bin/uvicorn main:app \
+    --host 0.0.0.0 \
+    --port 8000 \
+    --workers 1
+
+# Graceful shutdown: give uvicorn time to finish in-flight requests
+TimeoutStopSec=30
+KillSignal=SIGTERM
+KillMode=mixed
+
+# Restart on any non-zero exit (crash, OOM, etc.)
+Restart=always
+RestartSec=10
+
+# Stop restart loop: max 5 restarts within 120 seconds, then give up
+StartLimitIntervalSec=120
+StartLimitBurst=5
+
+# Environment
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+# Note: python-dotenv reads backend/.env automatically from WorkingDirectory
+# so all your API keys in .env are picked up without listing them here
+
+# Logging — view with: sudo journalctl -u ai-news -f
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ai-pulse
+
+[Install]
+WantedBy=multi-user.target

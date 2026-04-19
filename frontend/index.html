@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Pulse — Global AI Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ─── Variables ──────────────────────────────────────────────────────────── */
+:root {
+  --cream:       #F7F2EA;
+  --cream-deep:  #EDE5D7;
+  --white:       #FFFFFF;
+  --coffee-50:   #FBF6EF;
+  --coffee-100:  #F2E5CF;
+  --coffee-200:  #E3CBA9;
+  --coffee-300:  #CEAA7E;
+  --coffee-400:  #C8A27C;
+  --coffee-500:  #B8895A;
+  --coffee-600:  #9B6E45;
+  --coffee-700:  #7A5232;
+  --coffee-800:  #5C3A1E;
+  --coffee-900:  #3D2210;
+  --text:        #1A0F07;
+  --text-2:      #4A3020;
+  --text-3:      #8B6A50;
+  --text-4:      #B89880;
+  --border:      #E0CEBC;
+  --border-2:    #CFBA9F;
+  --pri-high:    #B03A2E;
+  --pri-med:     #C07C1A;
+  --shadow-sm:   0 1px 6px rgba(80,40,10,0.06);
+  --shadow-md:   0 4px 20px rgba(80,40,10,0.09);
+  --shadow-lg:   0 12px 48px rgba(80,40,10,0.12);
+  --font:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --nav-h:       60px;
+  /* Category accent colors */
+  --c-research:  #6B4FA3;
+  --c-launch:    #1E6B41;
+  --c-funding:   #9B5E1A;
+  --c-company:   #1E5494;
+  --c-regulation:#A02848;
+  --c-trending:  #7A6218;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+::selection { background: var(--coffee-200); }
+
+/* ─── Typography ──────────────────────────────────────────────────────────── */
+.t-display  { font-size: clamp(38px, 6vw, 72px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+.t-hero-sub { font-size: clamp(18px, 2.5vw, 26px); font-weight: 300; line-height: 1.4; letter-spacing: -0.01em; }
+.t-h2       { font-size: clamp(24px, 3vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+.t-h3       { font-size: clamp(18px, 2vw, 24px); font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; }
+.t-body     { font-size: 15px; line-height: 1.75; color: var(--text-2); }
+.t-small    { font-size: 12px; line-height: 1.5; }
+.t-label    { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes fadeUp    { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn    { from { opacity:0; } to { opacity:1; } }
+@keyframes heroShift { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+@keyframes bounce    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+@keyframes spin      { to { transform:rotate(360deg); } }
+@keyframes slideInRight { from{transform:translateX(100%)} to{transform:translateX(0)} }
+@keyframes slideOutRight { from{transform:translateX(0)} to{transform:translateX(100%)} }
+@keyframes toastIn   { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes toastOut  { from{opacity:1;transform:translateY(0)} to{opacity:0;transform:translateY(-16px)} }
+
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ─── Navbar ─────────────────────────────────────────────────────────────── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-h);
+  background: rgba(247,242,234,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 32px; gap: 24px;
+}
+.nav-logo-wrap {
+  display: flex; align-items: center; gap: 11px; flex-shrink: 0;
+}
+.nav-logo-img { height: 34px; width: auto; object-fit: contain; display: block; }
+.nav-logo-fallback {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--coffee-700), var(--coffee-500));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: white; flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+.nav-name { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+.nav-sub  { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-4); }
+.nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.nav-btn {
+  padding: 6px 14px; border-radius: 7px;
+  font-size: 14px; font-weight: 500; color: var(--text-3);
+  transition: all 0.15s;
+}
+.nav-btn:hover { background: var(--cream-deep); color: var(--text); }
+.nav-btn.active { background: var(--coffee-400); color: white; }
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.live-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 20px;
+  border: 1px solid var(--border-2);
+  background: var(--coffee-50);
+  font-size: 11px; font-weight: 600; color: var(--coffee-700);
+  letter-spacing: 0.06em;
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #1E6B41;
+  animation: fadeIn 0.3s, livePulse 2s ease-in-out 0.3s infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.btn-refresh {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 16px; border-radius: 7px;
+  background: var(--coffee-600); color: white;
+  font-size: 13px; font-weight: 600;
+  transition: all 0.18s;
+}
+.btn-refresh:hover { background: var(--coffee-700); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-refresh:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-refresh svg { flex-shrink: 0; }
+.hamburger { display: none; padding: 6px; color: var(--text-2); }
+
+/* ─── Mobile nav ─────────────────────────────────────────────────────────── */
+.mobile-nav {
+  display: none; position: fixed;
+  top: var(--nav-h); left: 0; right: 0; z-index: 99;
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 12px 20px 20px; flex-direction: column; gap: 4px;
+  box-shadow: var(--shadow-md);
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav-btn {
+  padding: 11px 14px; border-radius: 7px;
+  font-size: 15px; font-weight: 500; color: var(--text-2);
+  text-align: left; transition: all 0.12s;
+}
+.mobile-nav-btn:hover { background: var(--cream-deep); color: var(--text); }
+.mobile-nav-btn.active { background: var(--coffee-400); color: white; }
+
+/* ─── Toast ──────────────────────────────────────────────────────────────── */
+.toast-container {
+  position: fixed; top: calc(var(--nav-h) + 12px); right: 20px;
+  z-index: 1000; display: flex; flex-direction: column; gap: 8px;
+}
+.toast {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--coffee-800); color: white;
+  padding: 12px 16px; border-radius: 10px;
+  font-size: 13px; font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  animation: toastIn 0.25s ease;
+  cursor: default; max-width: 320px;
+}
+.toast.out { animation: toastOut 0.25s ease forwards; }
+.toast-close {
+  margin-left: auto; opacity: 0.6; color: white; flex-shrink: 0;
+  transition: opacity 0.12s; padding: 2px;
+}
+.toast-close:hover { opacity: 1; }
+
+/* ─── Pages ──────────────────────────────────────────────────────────────── */
+.page { display: none; padding-top: var(--nav-h); }
+.page.active { display: block; }
+
+/* ─── Hero ───────────────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100svh;
+  background: linear-gradient(145deg,
+    var(--coffee-900) 0%, var(--coffee-800) 20%,
+    var(--coffee-700) 50%, var(--coffee-600) 75%, var(--coffee-500) 100%);
+  background-size: 200% 200%;
+  animation: heroShift 14s ease-in-out infinite alternate;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(200,162,124,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(200,162,124,0.10) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+  padding: 100px 48px 80px;
+  width: 100%;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid rgba(200,162,124,0.35);
+  background: rgba(200,162,124,0.12);
+  color: var(--coffee-200); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 32px;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #6BCC92; animation: livePulse 2s infinite; }
+.hero-title {
+  color: white; margin-bottom: 22px;
+  animation: fadeUp 0.6s ease 0.35s both;
+}
+.hero-title em { color: var(--coffee-300); font-style: normal; }
+.hero-desc {
+  color: rgba(255,255,255,0.62); max-width: 560px;
+  font-size: clamp(15px, 1.8vw, 18px); font-weight: 400; line-height: 1.7;
+  margin-bottom: 40px;
+  animation: fadeUp 0.6s ease 0.5s both;
+}
+.hero-cta {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  animation: fadeUp 0.6s ease 0.65s both;
+}
+.btn-primary {
+  padding: 14px 28px; border-radius: 9px;
+  background: white; color: var(--coffee-800);
+  font-size: 14px; font-weight: 700;
+  transition: all 0.18s; letter-spacing: -0.01em;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,255,255,0.2); }
+.hero-stat {
+  color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500;
+}
+.hero-stat strong { color: rgba(255,255,255,0.85); font-weight: 700; }
+.hero-scroll {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.35); animation: bounce 2.5s ease infinite;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.hero-scroll span { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ─── KPI strip ──────────────────────────────────────────────────────────── */
+.kpi-strip {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  display: flex; align-items: stretch; overflow-x: auto;
+}
+.kpi-item {
+  padding: 24px 32px; flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.kpi-item:last-child { border-right: none; }
+.kpi-num { font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1; }
+.kpi-lbl { font-size: 11px; font-weight: 500; color: var(--text-4); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* ─── Feed container ─────────────────────────────────────────────────────── */
+.feed-outer { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+.feed-layout { display: grid; grid-template-columns: 1fr 300px; gap: 48px; padding: 48px 0 80px; }
+
+/* ─── Filter bar ─────────────────────────────────────────────────────────── */
+.filter-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 0;
+}
+.filter-group { display: flex; gap: 4px; align-items: center; }
+.filter-sep { width: 1px; height: 20px; background: var(--border-2); margin: 0 6px; }
+.fc {
+  padding: 5px 13px; border-radius: 6px;
+  font-size: 12px; font-weight: 500; color: var(--text-3);
+  border: 1px solid transparent; background: none;
+  transition: all 0.13s;
+}
+.fc:hover { background: var(--cream-deep); color: var(--text); }
+.fc.active { background: var(--coffee-400); color: white; border-color: var(--coffee-400); }
+.results-lbl { margin-left: auto; font-size: 12px; color: var(--text-4); white-space: nowrap; }
+
+/* ─── News list ──────────────────────────────────────────────────────────── */
+.news-list { display: flex; flex-direction: column; }
+
+.news-item {
+  padding: 28px 0 28px 20px;
+  border-bottom: 1px solid var(--border);
+  border-left: 2.5px solid transparent;
+  cursor: pointer;
+  transition: border-left-color 0.2s, padding-left 0.2s;
+  position: relative;
+}
+.news-item:hover { padding-left: 26px; }
+.news-item:first-child { padding-top: 32px; }
+
+/* Category accent left-border colors */
+.news-item[data-cat="Research"]       { border-left-color: var(--c-research); }
+.news-item[data-cat="Product Launch"] { border-left-color: var(--c-launch); }
+.news-item[data-cat="Funding"]        { border-left-color: var(--c-funding); }
+.news-item[data-cat="Company Update"] { border-left-color: var(--c-company); }
+.news-item[data-cat="Regulation"]     { border-left-color: var(--c-regulation); }
+.news-item[data-cat="Trending"]       { border-left-color: var(--c-trending); }
+
+.news-meta {
+  display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--text-4);
+  margin-bottom: 9px;
+}
+.meta-cat { font-weight: 700; }
+.meta-cat.Research      { color: var(--c-research); }
+.meta-cat.Launch        { color: var(--c-launch); }
+.meta-cat.Funding       { color: var(--c-funding); }
+.meta-cat.Company       { color: var(--c-company); }
+.meta-cat.Regulation    { color: var(--c-regulation); }
+.meta-cat.Trending      { color: var(--c-trending); }
+.meta-sep { margin: 0 8px; opacity: 0.5; }
+.meta-pri {
+  margin-left: auto; font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em;
+}
+.meta-pri.High   { color: var(--pri-high); background: rgba(176,58,46,0.08); }
+.meta-pri.Medium { color: var(--pri-med); background: rgba(192,124,26,0.08); }
+
+.news-title {
+  font-size: 18px; font-weight: 700; color: var(--text);
+  line-height: 1.4; letter-spacing: -0.02em; margin-bottom: 8px;
+  transition: color 0.15s;
+}
+.news-item:hover .news-title { color: var(--coffee-700); }
+.news-item.featured .news-title { font-size: 22px; }
+
+.news-preview {
+  font-size: 14px; color: var(--text-3); line-height: 1.65;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; margin-bottom: 14px;
+}
+.news-actions {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.btn-read {
+  font-size: 12px; font-weight: 600; color: var(--coffee-600);
+  padding: 5px 0; letter-spacing: 0.01em;
+  display: flex; align-items: center; gap: 5px;
+  transition: color 0.13s; background: none; border: none;
+}
+.btn-read:hover { color: var(--coffee-800); }
+.btn-source {
+  font-size: 12px; font-weight: 500; color: var(--text-4);
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid var(--border-2);
+  display: flex; align-items: center; gap: 5px;
+  transition: all 0.13s;
+}
+.btn-source:hover { background: var(--cream-deep); color: var(--text-2); border-color: var(--border-2); }
+
+/* ─── Load more ──────────────────────────────────────────────────────────── */
+.load-more-wrap { padding: 32px 0; text-align: center; }
+.btn-load-more {
+  padding: 11px 28px; border-radius: 8px;
+  border: 1px solid var(--border-2); background: var(--white);
+  font-size: 13px; font-weight: 600; color: var(--text-3);
+  transition: all 0.15s;
+}
+.btn-load-more:hover { background: var(--cream-deep); color: var(--text); }
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.sidebar { display: flex; flex-direction: column; gap: 32px; padding-top: 32px; }
+.sidebar-section { }
+.sidebar-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-4); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.sidebar-trend-list { display: flex; flex-direction: column; gap: 2px; }
+.sidebar-trend {
+  padding: 8px 10px; border-radius: 6px; cursor: pointer;
+  transition: all 0.13s;
+}
+.sidebar-trend:hover { background: var(--cream-deep); }
+.sidebar-trend-name { font-size: 13px; font-weight: 500; color: var(--text-2); line-height: 1.4; }
+.sidebar-trend-reason { font-size: 11px; color: var(--text-4); margin-top: 2px; }
+.sidebar-cats { display: flex; flex-direction: column; gap: 4px; }
+.sidebar-cat {
+  padding: 8px 10px; border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.13s; font-size: 13px; font-weight: 500; color: var(--text-2);
+}
+.sidebar-cat:hover { background: var(--cream-deep); }
+.sidebar-cat-count { font-size: 11px; font-weight: 600; color: var(--text-4); background: var(--cream-deep); padding: 2px 7px; border-radius: 10px; }
+
+/* ─── Empty / Loading states ─────────────────────────────────────────────── */
+.state-loading {
+  padding: 64px 0; text-align: center; color: var(--text-4);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 14px;
+}
+.spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--border-2); border-top-color: var(--coffee-500); border-radius: 50%; animation: spin 0.65s linear infinite; flex-shrink: 0; }
+.state-empty {
+  padding: 64px 0; text-align: center; color: var(--text-4); font-size: 14px;
+  border: 1px dashed var(--border-2); border-radius: 12px; margin: 24px 0;
+}
+.state-empty strong { display: block; font-size: 15px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; }
+
+/* ─── Article detail ─────────────────────────────────────────────────────── */
+.article-view {
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--white); overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.article-view.open { transform: translateX(0); }
+.article-nav {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px; border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.94); backdrop-filter: blur(12px);
+}
+.btn-back {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 600; color: var(--text-3);
+  padding: 7px 14px; border-radius: 7px;
+  border: 1px solid var(--border-2); background: none;
+  transition: all 0.15s;
+}
+.btn-back:hover { background: var(--cream); color: var(--text); }
+.btn-view-source {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 16px; border-radius: 7px;
+  background: var(--coffee-600); color: white;
+  font-size: 13px; font-weight: 600;
+  transition: all 0.15s;
+}
+.btn-view-source:hover { background: var(--coffee-700); }
+.article-body {
+  max-width: 720px; margin: 0 auto;
+  padding: 52px 40px 100px;
+}
+.article-kicker {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 18px; flex-wrap: wrap;
+}
+.art-cat {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.art-cat.Research    { color: var(--c-research); }
+.art-cat.Launch      { color: var(--c-launch); }
+.art-cat.Funding     { color: var(--c-funding); }
+.art-cat.Company     { color: var(--c-company); }
+.art-cat.Regulation  { color: var(--c-regulation); }
+.art-cat.Trending    { color: var(--c-trending); }
+.art-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-4); }
+.art-source { font-size: 12px; font-weight: 500; color: var(--text-4); }
+.art-time   { font-size: 12px; color: var(--text-4); }
+.article-title {
+  font-size: clamp(24px, 3.5vw, 36px); font-weight: 800;
+  line-height: 1.18; letter-spacing: -0.025em; color: var(--text);
+  margin-bottom: 32px;
+}
+.article-divider { height: 1px; background: var(--border); margin-bottom: 32px; }
+.article-section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--coffee-500); margin-bottom: 14px;
+}
+
+/* Overview — large intro text */
+.article-overview {
+  font-size: 17px; font-weight: 400; color: var(--text-2);
+  line-height: 1.85; margin-bottom: 40px;
+}
+.article-overview p { margin-bottom: 18px; }
+.article-overview p:last-child { margin-bottom: 0; }
+
+/* Detailed explanation — main body */
+.article-detail {
+  font-size: 15px; color: var(--text-2); line-height: 1.85;
+  margin-bottom: 40px;
+}
+.article-detail p { margin-bottom: 20px; }
+.article-detail p:last-child { margin-bottom: 0; }
+
+/* Key Insights highlight box */
+.article-insights {
+  background: var(--coffee-50);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--coffee-500);
+  border-radius: 0 0 10px 10px;
+  padding: 22px 26px;
+  margin-bottom: 40px;
+}
+.insights-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--coffee-500); margin-bottom: 16px;
+}
+.insights-list {
+  list-style: none; display: flex; flex-direction: column; gap: 13px;
+}
+.insights-list li {
+  padding-left: 22px; position: relative;
+  font-size: 14px; color: var(--text-2); line-height: 1.7; font-weight: 400;
+}
+.insights-list li::before {
+  content: '';
+  position: absolute; left: 0; top: 8px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--coffee-500);
+}
+
+/* Why It Matters — pull-quote style */
+.article-impact {
+  background: var(--cream); border-left: 3px solid var(--coffee-400);
+  padding: 20px 24px; border-radius: 0 10px 10px 0;
+  margin-bottom: 40px;
+}
+.article-impact p {
+  font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 16px;
+}
+.article-impact p:last-child { margin-bottom: 0; }
+
+/* Technical Breakdown — monospace-adjacent, darker bg */
+.article-tech-wrap { margin-bottom: 40px; }
+.article-tech {
+  background: var(--cream-deep); border: 1px solid var(--border-2);
+  border-radius: 10px; padding: 22px 26px;
+}
+.article-tech p {
+  font-size: 14px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 16px;
+}
+.article-tech p:last-child { margin-bottom: 0; }
+
+/* ─── Trends page ────────────────────────────────────────────────────────── */
+.trends-outer { max-width: 1200px; margin: 0 auto; padding: 64px 48px 80px; }
+.trends-hero { margin-bottom: 48px; }
+.trends-hero h2 { margin-bottom: 8px; }
+.trends-hero p { font-size: 15px; color: var(--text-3); }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 52px; }
+.trend-tag {
+  border: 1px solid var(--border-2);
+  border-radius: 6px; padding: 8px 16px;
+  font-weight: 600; color: var(--text-2);
+  background: var(--white); cursor: pointer;
+  transition: all 0.18s;
+  line-height: 1.2;
+}
+.trend-tag:hover { border-color: var(--coffee-400); color: var(--coffee-700); background: var(--coffee-50); }
+.trend-tag.selected { background: var(--coffee-600); border-color: var(--coffee-600); color: white; }
+/* Weighted sizes */
+.trend-tag:nth-child(1), .trend-tag:nth-child(2) { font-size: 20px; padding: 10px 20px; }
+.trend-tag:nth-child(3), .trend-tag:nth-child(4) { font-size: 17px; padding: 9px 18px; }
+.trend-tag:nth-child(5), .trend-tag:nth-child(6) { font-size: 15px; }
+.trend-tag:nth-child(7), .trend-tag:nth-child(8) { font-size: 14px; }
+.trend-tag:nth-child(n+9)                        { font-size: 13px; color: var(--text-3); }
+
+.trend-detail-box {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px 28px; margin-bottom: 32px;
+  box-shadow: var(--shadow-sm); display: none;
+}
+.trend-detail-box.open { display: block; }
+.trend-detail-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coffee-500); margin-bottom: 6px; }
+.trend-detail-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.trend-detail-reason { font-size: 14px; color: var(--text-3); line-height: 1.65; }
+.trends-section-title { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-4); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+
+/* ─── Categories page ────────────────────────────────────────────────────── */
+.cats-outer { max-width: 1200px; margin: 0 auto; padding: 64px 48px 80px; }
+.cats-header { margin-bottom: 36px; }
+.cats-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 52px; }
+.cat-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; gap: 16px; transition: padding-left 0.18s;
+}
+.cat-row:hover { padding-left: 10px; }
+.cat-row-left { display: flex; flex-direction: column; gap: 3px; }
+.cat-row-name { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+.cat-row-desc { font-size: 13px; color: var(--text-4); }
+.cat-row-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.cat-row-count { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+.cat-row-arrow { color: var(--text-4); transition: transform 0.18s; }
+.cat-row:hover .cat-row-arrow { transform: translateX(4px); }
+.cat-row[data-cat="Research"] .cat-row-name    { color: var(--c-research); }
+.cat-row[data-cat="Product Launch"] .cat-row-name { color: var(--c-launch); }
+.cat-row[data-cat="Funding"] .cat-row-name     { color: var(--c-funding); }
+.cat-row[data-cat="Company Update"] .cat-row-name { color: var(--c-company); }
+.cat-row[data-cat="Regulation"] .cat-row-name  { color: var(--c-regulation); }
+.cat-row[data-cat="Trending"] .cat-row-name    { color: var(--c-trending); }
+.cat-feed-header {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-4); padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 0;
+}
+
+/* ─── About page ──────────────────────────────────────────────────────────── */
+.about-page { padding-bottom: 0; }
+.about-hero {
+  background: linear-gradient(145deg, var(--coffee-900) 0%, var(--coffee-800) 40%, var(--coffee-700) 100%);
+  padding: 100px 48px; overflow: hidden; position: relative;
+}
+.about-hero::after {
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 40%;
+  background: radial-gradient(ellipse at center right, rgba(200,162,124,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.about-hero-inner { max-width: 1200px; margin: 0 auto; }
+.about-hero-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coffee-300); margin-bottom: 16px; }
+.about-hero-title { color: white; margin-bottom: 20px; }
+.about-hero-desc { color: rgba(255,255,255,0.65); max-width: 540px; font-size: 17px; font-weight: 400; line-height: 1.7; }
+
+.about-section { max-width: 1200px; margin: 0 auto; padding: 80px 48px; border-bottom: 1px solid var(--border); }
+.about-section:last-child { border-bottom: none; }
+.about-section-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coffee-500); margin-bottom: 14px; }
+.about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.about-cols.flip { direction: rtl; }
+.about-cols.flip > * { direction: ltr; }
+.about-lead { font-size: clamp(18px, 2vw, 24px); font-weight: 700; color: var(--text); line-height: 1.3; letter-spacing: -0.015em; margin-bottom: 16px; }
+.about-body { font-size: 15px; color: var(--text-3); line-height: 1.75; }
+.about-stat-block { display: flex; flex-direction: column; gap: 20px; }
+.about-stat { }
+.about-stat-num { font-size: 40px; font-weight: 800; color: var(--coffee-600); letter-spacing: -0.03em; line-height: 1; }
+.about-stat-lbl { font-size: 13px; color: var(--text-4); margin-top: 4px; }
+
+.pipeline-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.pipeline-steps::before {
+  content: ''; position: absolute; top: 22px; left: 15%; right: 15%; height: 1px;
+  background: var(--border-2);
+}
+.pipeline-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px; }
+.step-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--white); border: 1.5px solid var(--coffee-300);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 800; color: var(--coffee-600);
+  margin-bottom: 16px; position: relative; z-index: 1;
+}
+.step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.step-desc  { font-size: 12px; color: var(--text-4); line-height: 1.55; }
+
+.sources-list { display: flex; flex-direction: column; gap: 0; }
+.source-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0; border-bottom: 1px solid var(--border); gap: 16px;
+}
+.source-row:first-child { border-top: 1px solid var(--border); }
+.source-name { font-size: 15px; font-weight: 600; color: var(--text); }
+.source-desc { font-size: 13px; color: var(--text-4); margin-top: 2px; }
+.source-tag { font-size: 11px; font-weight: 600; color: var(--coffee-600); background: var(--coffee-100); padding: 3px 10px; border-radius: 4px; white-space: nowrap; letter-spacing: 0.03em; }
+
+/* ─── Footer ──────────────────────────────────────────────────────────────── */
+.footer {
+  background: var(--coffee-900); color: rgba(255,255,255,0.45);
+  padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-brand { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.7); }
+.footer-meta  { font-size: 12px; }
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+
+/* ── Tablet (≤ 1024px) ───────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .feed-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .about-cols { grid-template-columns: 1fr; gap: 32px; }
+  .about-cols.flip { direction: ltr; }   /* undo RTL flip on small screens */
+  .pipeline-steps { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .pipeline-steps::before { display: none; }
+  .kpi-strip { padding: 0 28px; }
+}
+
+/* ── Mobile (≤ 768px) ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar { padding: 0 16px; gap: 12px; }
+  .nav-links, .nav-actions { display: none; }
+  .hamburger { display: flex; }
+  .nav-name { font-size: 15px; }
+  .nav-sub  { display: none; }
+
+  /* Hero */
+  .hero-inner { padding: 72px 20px 56px; }
+  .hero-desc  { font-size: 15px; }
+  .hero-cta   { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .btn-primary { width: 100%; text-align: center; }
+  .hero-scroll { display: none; }
+
+  /* KPI strip — horizontal scroll, no wrapping */
+  .kpi-strip {
+    padding: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .kpi-strip::-webkit-scrollbar { display: none; }
+  .kpi-item { padding: 18px 22px; min-width: 130px; }
+  .kpi-num  { font-size: 24px; }
+
+  /* Feed */
+  .feed-outer { padding: 0 16px; }
+  .feed-layout { padding: 24px 0 60px; }
+
+  /* Filter bar — horizontally scrollable single row */
+  .filter-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 14px 0;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-sep { display: none; }          /* separators take too much space */
+  .results-lbl { display: none; }
+  .fc {
+    padding: 8px 14px;                   /* taller tap target */
+    font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* News items */
+  .news-item { padding: 20px 0 20px 14px; }
+  .news-item:first-child { padding-top: 24px; }
+  .news-title { font-size: 16px; }
+  .news-preview { font-size: 13px; -webkit-line-clamp: 3; }
+  .news-actions { gap: 8px; flex-wrap: wrap; }
+  .btn-read   { font-size: 12px; }
+  .btn-source { font-size: 12px; }
+
+  /* Article overlay */
+  .article-nav  { padding: 12px 16px; gap: 8px; }
+  .btn-back     { padding: 7px 12px; font-size: 13px; gap: 6px; }
+  .btn-view-source { padding: 7px 12px; font-size: 12px; }
+  .article-body { padding: 28px 16px 60px; }
+  .article-title { font-size: 22px; }
+  .article-overview { font-size: 15px; }
+  .article-insights { padding: 18px 18px; }
+
+  /* Trends */
+  .trends-outer { padding: 32px 16px 60px; }
+  .trend-detail-box { padding: 18px 20px; }
+
+  /* Categories */
+  .cats-outer { padding: 32px 16px 60px; }
+  .cat-row-name { font-size: 15px; }
+  .cat-row-count { font-size: 18px; }
+
+  /* About */
+  .about-hero    { padding: 56px 20px; }
+  .about-section { padding: 48px 20px; }
+  .about-stat-num { font-size: 32px; }
+
+  /* Pipeline steps */
+  .pipeline-steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* Source rows — allow text to shrink */
+  .source-row { flex-wrap: wrap; gap: 8px; }
+
+  /* Footer */
+  .footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; gap: 6px; }
+
+  /* Mobile nav panel */
+  .mobile-nav { padding: 10px 16px 16px; }
+}
+
+/* ── Small phones (≤ 480px) ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* KPI — 2 per row */
+  .kpi-strip  { flex-wrap: wrap; overflow-x: visible; }
+  .kpi-item   {
+    min-width: calc(50% - 1px);
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .kpi-item:nth-child(odd)  { border-right: 1px solid var(--border); }
+  .kpi-item:last-child,
+  .kpi-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+
+  /* Pipeline — single column */
+  .pipeline-steps { grid-template-columns: 1fr; gap: 20px; }
+  .pipeline-step  { flex-direction: row; text-align: left; gap: 14px; align-items: flex-start; padding: 0; }
+  .step-num       { flex-shrink: 0; margin-bottom: 0; }
+
+  /* Hero */
+  .hero-inner { padding: 64px 16px 48px; }
+
+  /* Article overlay full screen */
+  .article-nav  { flex-wrap: wrap; }
+  .btn-back, .btn-view-source { font-size: 12px; padding: 7px 10px; }
+
+  /* About cols — full single column with more breathing room */
+  .about-section { padding: 40px 16px; }
+
+  /* Source rows — stack completely */
+  .source-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 0;
+    gap: 6px;
+  }
+  .source-tag { align-self: flex-start; }
+
+  /* Category page */
+  .cat-row { flex-wrap: wrap; }
+  .cat-row-right { margin-left: auto; }
+
+  /* Trends — make all tags same size on very small screens */
+  .trend-tag:nth-child(1), .trend-tag:nth-child(2) { font-size: 15px; padding: 8px 14px; }
+  .trend-tag:nth-child(3), .trend-tag:nth-child(4) { font-size: 14px; padding: 8px 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Navbar ────────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="nav-logo-wrap">
+    <img class="nav-logo-img" id="navLogo" src="/logo-nav.png" alt="AI Pulse"
+         onerror="this.style.display='none';document.getElementById('navFallback').style.display='flex'">
+    <div class="nav-logo-fallback" id="navFallback" style="display:none">AP</div>
+    <div>
+      <div class="nav-name">AI Pulse</div>
+      <div class="nav-sub">Intelligence</div>
+    </div>
+  </div>
+
+  <nav class="nav-links" id="navLinks">
+    <button class="nav-btn active" onclick="showPage('home',this)">Home</button>
+    <button class="nav-btn" onclick="showPage('trends',this)">Trends</button>
+    <button class="nav-btn" onclick="showPage('categories',this)">Categories</button>
+    <button class="nav-btn" onclick="showPage('about',this)">About</button>
+  </nav>
+
+  <div class="nav-actions">
+    <div class="live-pill"><div class="live-dot" id="liveDot"></div><span id="liveLabel">LIVE</span></div>
+    <button class="btn-refresh" id="refreshBtn" onclick="triggerRefresh()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+      Refresh
+    </button>
+  </div>
+  <button class="hamburger" onclick="toggleMobileNav()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
+  </button>
+</nav>
+
+<!-- ── Mobile nav ─────────────────────────────────────────────────────────── -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-btn active" onclick="showPage('home',this);closeMobileNav()">Home</button>
+  <button class="mobile-nav-btn" onclick="showPage('trends',this);closeMobileNav()">Trends</button>
+  <button class="mobile-nav-btn" onclick="showPage('categories',this);closeMobileNav()">Categories</button>
+  <button class="mobile-nav-btn" onclick="showPage('about',this);closeMobileNav()">About</button>
+  <button class="mobile-nav-btn" onclick="triggerRefresh();closeMobileNav()">Refresh Feed</button>
+</div>
+
+<!-- ── Toast container ───────────────────────────────────────────────────── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ── Article detail ────────────────────────────────────────────────────── -->
+<div class="article-view" id="articleView">
+  <div class="article-nav">
+    <button class="btn-back" onclick="closeArticle()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      Back to feed
+    </button>
+    <a class="btn-view-source" id="artSourceLink" href="#" target="_blank" rel="noopener">
+      View original source
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  </div>
+  <div class="article-body">
+    <div class="article-kicker" id="artKicker"></div>
+    <h1 class="article-title" id="artTitle"></h1>
+    <div class="article-divider"></div>
+
+    <div class="article-section-label">Overview</div>
+    <div class="article-overview" id="artOverview"></div>
+
+    <div class="article-section-label" id="lblDetail">Detailed Explanation</div>
+    <div class="article-detail" id="artDetail"></div>
+
+    <div class="article-insights" id="artInsightsWrap">
+      <div class="insights-label">Key Insights</div>
+      <ul class="insights-list" id="artInsights"></ul>
+    </div>
+
+    <div class="article-section-label">Why It Matters</div>
+    <div class="article-impact" id="artImpact"></div>
+
+    <div class="article-tech-wrap" id="artTechWrap">
+      <div class="article-section-label">Technical Breakdown</div>
+      <div class="article-tech" id="artTech"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<!-- PAGE: HOME                                                                -->
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge"><div class="hero-badge-dot"></div>Live Intelligence Platform</div>
+      <h1 class="t-display hero-title">AI Pulse<br><em>Global Intelligence</em></h1>
+      <p class="hero-desc">The most comprehensive real-time monitor for artificial intelligence news, research breakthroughs, and industry developments worldwide.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="scrollToFeed()">Explore Latest News</button>
+        <span class="hero-stat" id="heroStat"><strong>—</strong> articles tracked today</span>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="scrollToFeed()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- KPI strip -->
+  <div class="kpi-strip" id="kpiStrip">
+    <div class="kpi-item"><div class="kpi-num" id="kpiTotal">—</div><div class="kpi-lbl">Articles today</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiTools">—</div><div class="kpi-lbl">Tools launched</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiResearch">—</div><div class="kpi-lbl">Research papers</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiFunding">—</div><div class="kpi-lbl">Funding rounds</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiTrends">—</div><div class="kpi-lbl">Trending topics</div></div>
+  </div>
+
+  <!-- Feed area -->
+  <div class="feed-outer" id="feedAnchor">
+    <div class="feed-layout">
+
+      <!-- Main feed -->
+      <div>
+        <!-- Filter bar -->
+        <div class="filter-bar">
+          <div class="filter-group" id="priChips">
+            <button class="fc active" data-f="all"    onclick="setPri(this,'all')">All</button>
+            <button class="fc" data-f="High"   onclick="setPri(this,'High')">High</button>
+            <button class="fc" data-f="Medium" onclick="setPri(this,'Medium')">Medium</button>
+            <button class="fc" data-f="Low"    onclick="setPri(this,'Low')">Low</button>
+          </div>
+          <div class="filter-sep"></div>
+          <div class="filter-group" id="dateChips">
+            <button class="fc active" data-h="48"  onclick="setHours(this,48)">48h</button>
+            <button class="fc" data-h="24"  onclick="setHours(this,24)">Today</button>
+            <button class="fc" data-h="168" onclick="setHours(this,168)">7 days</button>
+          </div>
+          <div class="filter-sep"></div>
+          <div class="filter-group" id="catChips">
+            <button class="fc active" data-c="all" onclick="setCat(this,'all')">All Categories</button>
+            <button class="fc" data-c="Research"       onclick="setCat(this,'Research')">Research</button>
+            <button class="fc" data-c="Product Launch" onclick="setCat(this,'Product Launch')">Launches</button>
+            <button class="fc" data-c="Funding"        onclick="setCat(this,'Funding')">Funding</button>
+            <button class="fc" data-c="Regulation"     onclick="setCat(this,'Regulation')">Regulation</button>
+          </div>
+          <span class="results-lbl" id="resultsLbl"></span>
+        </div>
+
+        <!-- News list -->
+        <div id="newsList"></div>
+
+        <!-- Load more -->
+        <div class="load-more-wrap" id="loadMoreWrap" style="display:none">
+          <button class="btn-load-more" id="loadMoreBtn" onclick="loadMore()">Load more articles</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Trending Now</div>
+          <div class="sidebar-trend-list" id="sidebarTrends">
+            <div class="state-loading" style="padding:16px 0"><div class="spinner"></div></div>
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">By Category</div>
+          <div class="sidebar-cats" id="sidebarCats"></div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<!-- PAGE: TRENDS                                                              -->
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<div class="page" id="page-trends">
+  <div class="trends-outer">
+    <div class="trends-hero reveal">
+      <div class="t-label" style="color:var(--coffee-500);margin-bottom:10px">What's happening in AI</div>
+      <h2 class="t-h2" style="margin-bottom:8px">Trending Topics</h2>
+      <p class="t-body">Cross-article patterns and emerging themes detected across all AI news sources today.</p>
+    </div>
+    <div class="tag-cloud" id="tagCloud">
+      <div class="state-loading"><div class="spinner"></div> Loading trends...</div>
+    </div>
+    <div class="trend-detail-box" id="trendDetailBox">
+      <div class="trend-detail-label">About this trend</div>
+      <div class="trend-detail-title" id="trendDetailTitle"></div>
+      <div class="trend-detail-reason" id="trendDetailReason"></div>
+    </div>
+    <div class="trends-section-title" id="trendsFeedLabel" style="display:none"></div>
+    <div id="trendsFeed"></div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<!-- PAGE: CATEGORIES                                                          -->
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<div class="page" id="page-categories">
+  <div class="cats-outer">
+    <div class="cats-header reveal">
+      <h2 class="t-h2" style="margin-bottom:8px">Browse by Category</h2>
+      <p class="t-body">Explore AI news organized by type — research, products, funding, and more.</p>
+    </div>
+    <div class="cats-list" id="catsList">
+      <div class="cat-row reveal" data-cat="Research" onclick="loadCatFeed('Research')">
+        <div class="cat-row-left">
+          <div class="cat-row-name">Research</div>
+          <div class="cat-row-desc">Academic papers, ML breakthroughs, and scientific discoveries</div>
+        </div>
+        <div class="cat-row-right">
+          <div class="cat-row-count" id="cnt-Research">—</div>
+          <div class="cat-row-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+      <div class="cat-row reveal reveal-delay-1" data-cat="Product Launch" onclick="loadCatFeed('Product Launch')">
+        <div class="cat-row-left">
+          <div class="cat-row-name">Product Launches</div>
+          <div class="cat-row-desc">New AI tools, applications, models, and platform releases</div>
+        </div>
+        <div class="cat-row-right">
+          <div class="cat-row-count" id="cnt-Product Launch">—</div>
+          <div class="cat-row-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+      <div class="cat-row reveal reveal-delay-2" data-cat="Funding" onclick="loadCatFeed('Funding')">
+        <div class="cat-row-left">
+          <div class="cat-row-name">Funding</div>
+          <div class="cat-row-desc">AI startup investments, acquisitions, and funding rounds</div>
+        </div>
+        <div class="cat-row-right">
+          <div class="cat-row-count" id="cnt-Funding">—</div>
+          <div class="cat-row-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+      <div class="cat-row reveal reveal-delay-3" data-cat="Company Update" onclick="loadCatFeed('Company Update')">
+        <div class="cat-row-left">
+          <div class="cat-row-name">Company Updates</div>
+          <div class="cat-row-desc">Strategic moves, partnerships, and announcements from AI companies</div>
+        </div>
+        <div class="cat-row-right">
+          <div class="cat-row-count" id="cnt-Company Update">—</div>
+          <div class="cat-row-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+      <div class="cat-row reveal reveal-delay-4" data-cat="Regulation" onclick="loadCatFeed('Regulation')">
+        <div class="cat-row-left">
+          <div class="cat-row-name">Regulation</div>
+          <div class="cat-row-desc">AI policy, government actions, ethics frameworks, and legal developments</div>
+        </div>
+        <div class="cat-row-right">
+          <div class="cat-row-count" id="cnt-Regulation">—</div>
+          <div class="cat-row-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="cat-feed-header" id="catFeedHeader" style="display:none"></div>
+    <div id="catFeedContainer"></div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<!-- PAGE: ABOUT                                                               -->
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<div class="page about-page" id="page-about">
+
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <div class="about-hero-label">About AI Pulse</div>
+      <h1 class="t-display about-hero-title">Global AI Intelligence<br>on autopilot.</h1>
+      <p class="about-hero-desc">AI Pulse is an autonomous intelligence platform that continuously monitors, filters, and synthesizes artificial intelligence news from across the web — delivering what matters, stripped of noise.</p>
+    </div>
+  </div>
+
+  <div class="about-section reveal">
+    <div class="about-section-kicker">The Problem</div>
+    <div class="about-cols">
+      <div>
+        <div class="about-lead">AI moves faster than anyone can track manually.</div>
+        <p class="about-body">Hundreds of papers, product launches, funding announcements, and regulatory changes happen every day. Important signals are buried in noise. Non-AI content floods general news feeds. Staying informed requires hours of manual curation.</p>
+      </div>
+      <div class="about-stat-block">
+        <div class="about-stat">
+          <div class="about-stat-num">500+</div>
+          <div class="about-stat-lbl">AI-related articles published daily across sources</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">10 min</div>
+          <div class="about-stat-lbl">Pipeline refresh interval — near real-time coverage</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">6</div>
+          <div class="about-stat-lbl">Structured categories for instant relevance filtering</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-section reveal" style="background: var(--coffee-50);">
+    <div class="about-section-kicker">How It Works</div>
+    <h2 class="t-h2" style="text-align:center;margin-bottom:52px">The intelligence pipeline</h2>
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Fetch</div>
+        <div class="step-desc">NewsAPI queries and arXiv categories are polled every 10 minutes, pulling hundreds of articles from across the web.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Filter</div>
+        <div class="step-desc">Keyword pre-filtering removes non-AI content. Only articles containing verified AI signals advance to the next stage.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">3</div>
+        <div class="step-title">Analyze</div>
+        <div class="step-desc">A language model classifies each article, generates a structured summary, assigns priority, and detects cross-article trends.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">4</div>
+        <div class="step-title">Deliver</div>
+        <div class="step-desc">Processed intelligence is stored and served in real time. The dashboard auto-refreshes every 30 seconds.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-section reveal">
+    <div class="about-section-kicker">Data Sources</div>
+    <div class="about-cols">
+      <div>
+        <div class="about-lead">Every major source in AI, automatically tracked.</div>
+        <p class="about-body">AI Pulse monitors a curated set of high-quality news sources and academic repositories, filtering exclusively for artificial intelligence content. Non-AI articles are rejected at two layers: keyword analysis and LLM validation.</p>
+      </div>
+      <div class="sources-list">
+        <div class="source-row">
+          <div><div class="source-name">NewsAPI</div><div class="source-desc">7 AI-focused search queries, 48-hour rolling window, English language</div></div>
+          <div class="source-tag">News</div>
+        </div>
+        <div class="source-row">
+          <div><div class="source-name">arXiv cs.AI</div><div class="source-desc">Artificial intelligence research — latest 5 papers per cycle</div></div>
+          <div class="source-tag">Research</div>
+        </div>
+        <div class="source-row">
+          <div><div class="source-name">arXiv cs.LG</div><div class="source-desc">Machine learning research — latest 5 papers per cycle</div></div>
+          <div class="source-tag">Research</div>
+        </div>
+        <div class="source-row">
+          <div><div class="source-name">arXiv cs.CL</div><div class="source-desc">Computation and language / NLP — latest 5 papers per cycle</div></div>
+          <div class="source-tag">Research</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-section reveal">
+    <div class="about-section-kicker">AI Processing</div>
+    <div class="about-cols flip">
+      <div>
+        <div class="about-lead">LLM-powered analysis for every article.</div>
+        <p class="about-body">Each batch of articles is sent to a language model (Ollama locally, or Groq/OpenAI in the cloud). The model classifies the article, writes a structured summary, assigns an impact statement, flags high-priority items, and identifies trending topics across the batch.</p>
+        <p class="about-body" style="margin-top:14px">Supported providers: Ollama (local, free), Groq (free tier), OpenAI (gpt-4o-mini). Configurable via the .env file.</p>
+      </div>
+      <div class="about-stat-block">
+        <div class="about-stat">
+          <div class="about-stat-num">6</div>
+          <div class="about-stat-lbl">Structured classification categories</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">3</div>
+          <div class="about-stat-lbl">Priority levels with alert triggers</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">2</div>
+          <div class="about-stat-lbl">AI validation layers to reject non-AI content</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-brand">AI Pulse — Global AI Intelligence</span>
+    <span class="footer-meta" id="footerMeta">Monitoring AI news continuously</span>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+const S = {
+  items: [], itemMap: {}, activePri: 'all', activeCat: 'all',
+  hours: 48, page: 1, total: 0,
+  prevCount: 0, trends: [],
+  pipelineOk: true, dataStatus: 'idle',
+};
+const PAGE_SIZE = 25;
+
+// ── Utilities ────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function timeAgo(iso) {
+  if (!iso) return '';
+  try {
+    const d = new Date(iso.endsWith('Z') ? iso : iso + 'Z');
+    const s = Math.floor((Date.now() - d) / 1000);
+    if (s < 60)     return 'just now';
+    if (s < 3600)   return Math.floor(s/60) + 'm ago';
+    if (s < 86400)  return Math.floor(s/3600) + 'h ago';
+    if (s < 604800) return Math.floor(s/86400) + 'd ago';
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  } catch { return ''; }
+}
+function fmtDate(iso) {
+  if (!iso) return '';
+  try {
+    return new Date(iso.endsWith('Z') ? iso : iso + 'Z')
+      .toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  } catch { return iso; }
+}
+function catClass(cat) {
+  const m = {'Research':'Research','Product Launch':'Launch','Funding':'Funding','Company Update':'Company','Regulation':'Regulation','Trending':'Trending'};
+  return m[cat] || 'Company';
+}
+function formatParagraphs(text) {
+  if (!text) return '';
+  return text.split(/\n\n+/)
+    .map(p => p.trim())
+    .filter(p => p.length > 0)
+    .map(p => `<p>${esc(p)}</p>`)
+    .join('');
+}
+
+// ── Toast ────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const c = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `<span>${esc(msg)}</span>
+    <button class="toast-close" onclick="dismissToast(this.parentElement)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>`;
+  c.appendChild(el);
+  setTimeout(() => dismissToast(el), 5000);
+}
+function dismissToast(el) {
+  if (!el || el.classList.contains('out')) return;
+  el.classList.add('out');
+  setTimeout(() => el.remove(), 300);
+}
+
+// ── Article detail ────────────────────────────────────────────────────────────
+function openArticle(item) {
+  const catCls = catClass(item.category);
+
+  // Kicker: category · source · date
+  document.getElementById('artKicker').innerHTML =
+    `<span class="art-cat ${catCls}">${esc(item.category)}</span>
+     <div class="art-dot"></div>
+     <span class="art-source">${esc(item.source)}</span>
+     <div class="art-dot"></div>
+     <span class="art-time">${fmtDate(item.published_at || item.fetched_at)}</span>`;
+
+  document.getElementById('artTitle').textContent = item.title || '';
+
+  // Overview (falls back to legacy summary)
+  const overviewText = item.overview || item.summary || '';
+  document.getElementById('artOverview').innerHTML = formatParagraphs(overviewText);
+
+  // Detailed explanation (hide section if absent — legacy articles)
+  const detailText = item.detailed_explanation || '';
+  const detailEl   = document.getElementById('artDetail');
+  const lblDetail  = document.getElementById('lblDetail');
+  if (detailText) {
+    detailEl.innerHTML       = formatParagraphs(detailText);
+    detailEl.style.display   = '';
+    lblDetail.style.display  = '';
+  } else {
+    detailEl.style.display   = 'none';
+    lblDetail.style.display  = 'none';
+  }
+
+  // Key insights (hide box if absent)
+  const insightsWrap = document.getElementById('artInsightsWrap');
+  const insightsList = document.getElementById('artInsights');
+  const insights = Array.isArray(item.key_insights) ? item.key_insights : [];
+  if (insights.length) {
+    insightsList.innerHTML     = insights.map(i => `<li>${esc(i)}</li>`).join('');
+    insightsWrap.style.display = '';
+  } else {
+    insightsWrap.style.display = 'none';
+  }
+
+  // Why It Matters (falls back to legacy impact)
+  const impactText = item.why_it_matters || item.impact || '';
+  document.getElementById('artImpact').innerHTML = formatParagraphs(impactText);
+
+  // Technical breakdown (hide section if absent or empty)
+  const techText = (item.technical_breakdown || '').trim();
+  const techWrap = document.getElementById('artTechWrap');
+  const techEl   = document.getElementById('artTech');
+  if (techText) {
+    techEl.innerHTML       = formatParagraphs(techText);
+    techWrap.style.display = '';
+  } else {
+    techWrap.style.display = 'none';
+  }
+
+  document.getElementById('artSourceLink').href = item.url || '#';
+
+  const view = document.getElementById('articleView');
+  view.classList.add('open');
+  view.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeArticle() {
+  document.getElementById('articleView').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Render news list ──────────────────────────────────────────────────────────
+function renderNewsItem(item, idx) {
+  S.itemMap[item.id] = item;  // store full item for overlay — avoids large inline JSON
+  const t        = timeAgo(item.published_at || item.fetched_at);
+  const featured = item.priority === 'High' ? ' featured' : '';
+  const preview  = item.overview || item.summary || '';
+  const id       = esc(item.id);
+  return `<div class="news-item reveal${featured}" data-cat="${esc(item.category)}"
+               style="transition-delay:${Math.min(idx,6)*0.06}s"
+               onclick="openArticle(S.itemMap['${id}'])">
+    <div class="news-meta">
+      <span class="meta-cat ${catClass(item.category)}">${esc(item.category)}</span>
+      <span class="meta-sep">·</span>
+      <span>${esc(item.source)}</span>
+      <span class="meta-sep">·</span>
+      <span>${t}</span>
+      ${item.priority !== 'Low' ? `<span class="meta-pri ${esc(item.priority)}">${esc(item.priority)}</span>` : ''}
+    </div>
+    <div class="news-title">${esc(item.title)}</div>
+    <div class="news-preview">${esc(preview)}</div>
+    <div class="news-actions" onclick="event.stopPropagation()">
+      <button class="btn-read" onclick="openArticle(S.itemMap['${id}'])">
+        Read full article
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+      ${item.url ? `<a class="btn-source" href="${esc(item.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">View source<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderNewsList(items, container) {
+  if (!items.length) {
+    container.innerHTML = `<div class="state-empty"><strong>No articles found</strong>The pipeline runs every 10 minutes. Check back soon or try a different filter.</div>`;
+    return;
+  }
+  container.innerHTML = items.map((item, i) => renderNewsItem(item, i)).join('');
+  observeReveal(container);
+}
+
+// ── Intersection observer ─────────────────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.06 });
+
+function observeReveal(root = document) {
+  root.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
+}
+
+// ── Data loading ──────────────────────────────────────────────────────────────
+async function loadFeed(reset = false) {
+  if (reset) { S.page = 1; S.items = []; }
+  const container = document.getElementById('newsList');
+
+  if (reset) container.innerHTML = '<div class="state-loading"><div class="spinner"></div> Loading...</div>';
+
+  const params = new URLSearchParams({ hours: S.hours, limit: PAGE_SIZE, page: S.page });
+  if (S.activePri !== 'all') params.set('priority', S.activePri);
+  if (S.activeCat !== 'all') params.set('category', S.activeCat);
+
+  try {
+    const d = await fetch('/api/news?' + params).then(r => r.json());
+    const newItems = d.items || [];
+    S.total      = d.total || 0;
+    S.pipelineOk = d.pipeline_ok !== false;
+    S.dataStatus = d.data_status || 'idle';
+
+    if (reset) S.items = newItems;
+    else S.items = S.items.concat(newItems);
+
+    if (S.items.length === 0 && !S.pipelineOk) {
+      container.innerHTML = `<div class="state-empty">
+        <strong>Data sources are unavailable</strong>
+        The pipeline could not reach news APIs. It will retry automatically on the next scheduled run.
+      </div>`;
+    } else {
+      renderNewsList(S.items, container);
+    }
+    document.getElementById('resultsLbl').textContent = S.total + ' article' + (S.total !== 1 ? 's' : '');
+
+    const more = S.items.length < S.total;
+    document.getElementById('loadMoreWrap').style.display = more ? 'block' : 'none';
+  } catch(e) {
+    container.innerHTML = '<div class="state-empty"><strong>Cannot reach backend</strong>Start the server with: uvicorn main:app --host 0.0.0.0 --port 8000</div>';
+  }
+}
+
+async function loadMore() {
+  const btn = document.getElementById('loadMoreBtn');
+  btn.textContent = 'Loading...'; btn.disabled = true;
+  S.page++;
+  await loadFeed(false);
+  btn.textContent = 'Load more articles'; btn.disabled = false;
+}
+
+async function loadStats() {
+  try {
+    const d = await fetch('/api/stats').then(r => r.json());
+    document.getElementById('kpiTotal').textContent    = d.total_today    ?? '—';
+    document.getElementById('kpiTools').textContent    = d.tools_launched  ?? '—';
+    document.getElementById('kpiResearch').textContent = d.research_papers ?? '—';
+    document.getElementById('kpiFunding').textContent  = d.funding_news    ?? '—';
+    document.getElementById('kpiTrends').textContent   = d.trending_count  ?? '—';
+    document.getElementById('heroStat').innerHTML = `<strong>${d.total_today ?? '—'}</strong> articles tracked today`;
+
+    if (d.last_run) {
+      const ok       = d.last_run.status === 'success';
+      const partial  = d.last_run.status === 'partial_error';
+      const noSource = d.pipeline_status === 'all_sources_failed';
+      const dotColor = noSource ? '#B03A2E' : partial ? '#C07C1A' : ok ? '#1E6B41' : '#B03A2E';
+      const label    = noSource ? 'OFFLINE' : partial ? 'PARTIAL' : ok ? 'LIVE' : 'ERROR';
+      document.getElementById('liveDot').style.background = dotColor;
+      document.getElementById('liveLabel').textContent    = label;
+      const llmNote = d.llm_used ? ` · LLM: ${d.llm_used}` : '';
+      const fbNote  = d.llm_fallbacks > 0 ? ` (${d.llm_fallbacks} fallback)` : '';
+      document.getElementById('footerMeta').textContent =
+        `Updated ${timeAgo(d.last_run.ran_at)} · +${d.last_run.items_added} new${llmNote}${fbNote}`;
+    }
+
+    // Sidebar categories
+    if (d.categories && d.categories.length) {
+      const sbc = document.getElementById('sidebarCats');
+      sbc.innerHTML = d.categories.map(c =>
+        `<div class="sidebar-cat" onclick="setCatFromSidebar('${esc(c.category)}')">
+          <span>${esc(c.category)}</span>
+          <span class="sidebar-cat-count">${c.cnt}</span>
+        </div>`
+      ).join('');
+      // Update category counts on categories page
+      d.categories.forEach(c => {
+        const el = document.getElementById('cnt-' + c.category);
+        if (el) el.textContent = c.cnt;
+      });
+    }
+  } catch(e) {}
+}
+
+async function loadTrends() {
+  const cloud = document.getElementById('tagCloud');
+  try {
+    const d = await fetch('/api/trends').then(r => r.json());
+    S.trends = d.trends || [];
+    if (!S.trends.length) {
+      cloud.innerHTML = '<div class="state-empty"><strong>No trends yet</strong>Trends are detected on the next pipeline run.</div>';
+      return;
+    }
+    cloud.className = 'tag-cloud';
+    cloud.innerHTML = S.trends.map((t,i) =>
+      `<button class="trend-tag" data-idx="${i}" onclick="selectTrend(this,${i})">${esc(t.topic)}</button>`
+    ).join('');
+
+    // Sidebar trends
+    document.getElementById('sidebarTrends').innerHTML = S.trends.slice(0,6).map(t =>
+      `<div class="sidebar-trend" onclick="showPage('trends',document.querySelector('.nav-btn:nth-child(2)'));selectTrendByTopic(${JSON.stringify(t.topic)})">
+        <div class="sidebar-trend-name">${esc(t.topic)}</div>
+        <div class="sidebar-trend-reason">${esc(t.reason)}</div>
+      </div>`
+    ).join('');
+  } catch(e) {
+    cloud.innerHTML = '<div class="state-empty">Could not load trends.</div>';
+  }
+}
+
+function selectTrend(el, idx) {
+  const t = S.trends[idx];
+  if (!t) return;
+  const wasSelected = el.classList.contains('selected');
+  document.querySelectorAll('.trend-tag').forEach(b => b.classList.remove('selected'));
+  const box = document.getElementById('trendDetailBox');
+  const lbl = document.getElementById('trendsFeedLabel');
+  const feed = document.getElementById('trendsFeed');
+  if (wasSelected) { box.classList.remove('open'); lbl.style.display='none'; feed.innerHTML=''; return; }
+  el.classList.add('selected');
+  document.getElementById('trendDetailTitle').textContent  = t.topic;
+  document.getElementById('trendDetailReason').textContent = t.reason;
+  box.classList.add('open');
+  // Filter items
+  const words = t.topic.toLowerCase().split(' ').filter(w => w.length > 2);
+  const matches = S.items.filter(i => words.some(w => (i.title+' '+i.summary).toLowerCase().includes(w)));
+  lbl.style.display = 'block';
+  lbl.textContent = `Related articles for "${t.topic}"`;
+  if (matches.length) {
+    feed.innerHTML = matches.map((item,i) => renderNewsItem(item,i)).join('');
+    observeReveal(feed);
+  } else {
+    feed.innerHTML = '<div class="state-empty"><strong>No direct matches</strong>Try another trending topic.</div>';
+  }
+}
+
+function selectTrendByTopic(topic) {
+  const idx = S.trends.findIndex(t => t.topic === topic);
+  if (idx === -1) return;
+  const btn = document.querySelector(`.trend-tag[data-idx="${idx}"]`);
+  if (btn) selectTrend(btn, idx);
+}
+
+async function loadCatFeed(cat) {
+  const header = document.getElementById('catFeedHeader');
+  const feed   = document.getElementById('catFeedContainer');
+  header.style.display = 'block';
+  header.textContent = cat + ' — recent articles';
+  feed.innerHTML = '<div class="state-loading"><div class="spinner"></div></div>';
+  try {
+    const d = await fetch(`/api/news?category=${encodeURIComponent(cat)}&hours=${S.hours}&limit=30`).then(r => r.json());
+    renderNewsList(d.items || [], feed);
+    feed.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch(e) {
+    feed.innerHTML = '<div class="state-empty">Could not load.</div>';
+  }
+}
+
+// ── Filters ───────────────────────────────────────────────────────────────────
+function setPri(el, val) {
+  document.querySelectorAll('#priChips .fc').forEach(c => c.classList.remove('active'));
+  el.classList.add('active'); S.activePri = val; loadFeed(true);
+}
+function setHours(el, h) {
+  document.querySelectorAll('#dateChips .fc').forEach(c => c.classList.remove('active'));
+  el.classList.add('active'); S.hours = h; loadFeed(true);
+}
+function setCat(el, val) {
+  document.querySelectorAll('#catChips .fc').forEach(c => c.classList.remove('active'));
+  el.classList.add('active'); S.activeCat = val; loadFeed(true);
+}
+function setCatFromSidebar(cat) {
+  S.activeCat = cat;
+  document.querySelectorAll('#catChips .fc').forEach(c => c.classList.remove('active'));
+  const match = document.querySelector(`#catChips .fc[data-c="${cat}"]`);
+  if (match) match.classList.add('active');
+  scrollToFeed(); loadFeed(true);
+}
+function scrollToFeed() { document.getElementById('feedAnchor').scrollIntoView({ behavior: 'smooth' }); }
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function showPage(id, triggerEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  if (triggerEl) triggerEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'trends')     { loadTrends(); if (!S.items.length) loadFeed(true); }
+  if (id === 'categories') { loadStats(); }
+  if (id === 'about')      { setTimeout(() => observeReveal(), 100); }
+  setTimeout(() => observeReveal(), 150);
+}
+function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+function closeMobileNav()  { document.getElementById('mobileNav').classList.remove('open'); }
+
+// ── Refresh ───────────────────────────────────────────────────────────────────
+async function triggerRefresh() {
+  const btn = document.getElementById('refreshBtn');
+  btn.disabled = true;
+  btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.65s linear infinite"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> Refreshing...`;
+  try {
+    await fetch('/api/refresh', { method: 'POST' });
+    await new Promise(r => setTimeout(r, 4000));
+    const prevCount = S.total;
+    await Promise.all([loadFeed(true), loadStats(), loadTrends()]);
+    if (S.total > prevCount) showToast(`${S.total - prevCount} new AI update${S.total - prevCount > 1 ? 's' : ''} available`);
+  } catch(e) {}
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> Refresh`;
+}
+
+// ── Polling ───────────────────────────────────────────────────────────────────
+async function poll() {
+  const prevTotal = S.total;
+  await Promise.all([loadFeed(true), loadStats(), loadTrends()]);
+  if (S.total > prevTotal && prevTotal > 0) {
+    showToast(`${S.total - prevTotal} new update${S.total - prevTotal > 1 ? 's' : ''}`);
+  }
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+async function init() {
+  await Promise.all([loadFeed(true), loadStats(), loadTrends()]);
+  observeReveal();
+  setInterval(poll, 30000);
+}
+init();
+</script>
+</body>
+</html>
