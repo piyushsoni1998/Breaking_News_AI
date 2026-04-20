@@ -933,7 +933,7 @@ img { max-width: 100%; }
       <p class="hero-desc">The most comprehensive real-time monitor for artificial intelligence news, research breakthroughs, and industry developments worldwide.</p>
       <div class="hero-cta">
         <button class="btn-primary" onclick="scrollToFeed()">Explore Latest News</button>
-        <span class="hero-stat" id="heroStat"><strong>—</strong> articles tracked today</span>
+        <span class="hero-stat" id="heroStat"><strong>—</strong> articles tracked this week</span>
       </div>
     </div>
     <div class="hero-scroll" onclick="scrollToFeed()">
@@ -944,10 +944,10 @@ img { max-width: 100%; }
 
   <!-- KPI strip -->
   <div class="kpi-strip" id="kpiStrip">
-    <div class="kpi-item"><div class="kpi-num" id="kpiTotal">—</div><div class="kpi-lbl">Articles today</div></div>
-    <div class="kpi-item"><div class="kpi-num" id="kpiTools">—</div><div class="kpi-lbl">Tools launched</div></div>
-    <div class="kpi-item"><div class="kpi-num" id="kpiResearch">—</div><div class="kpi-lbl">Research papers</div></div>
-    <div class="kpi-item"><div class="kpi-num" id="kpiFunding">—</div><div class="kpi-lbl">Funding rounds</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiTotal">—</div><div class="kpi-lbl">Articles (7 days)</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiTools">—</div><div class="kpi-lbl">Launches (7 days)</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiResearch">—</div><div class="kpi-lbl">Research (7 days)</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpiFunding">—</div><div class="kpi-lbl">Funding (7 days)</div></div>
     <div class="kpi-item"><div class="kpi-num" id="kpiTrends">—</div><div class="kpi-lbl">Trending topics</div></div>
   </div>
 
@@ -967,9 +967,9 @@ img { max-width: 100%; }
           </div>
           <div class="filter-sep"></div>
           <div class="filter-group" id="dateChips">
-            <button class="fc active" data-h="48"  onclick="setHours(this,48)">48h</button>
+            <button class="fc" data-h="48"  onclick="setHours(this,48)">48h</button>
             <button class="fc" data-h="24"  onclick="setHours(this,24)">Today</button>
-            <button class="fc" data-h="168" onclick="setHours(this,168)">7 days</button>
+            <button class="fc active" data-h="168" onclick="setHours(this,168)">7 days</button>
           </div>
           <div class="filter-sep"></div>
           <div class="filter-group" id="catChips">
@@ -1226,7 +1226,7 @@ img { max-width: 100%; }
 // ── State ────────────────────────────────────────────────────────────────────
 const S = {
   items: [], itemMap: {}, activePri: 'all', activeCat: 'all',
-  hours: 48, page: 1, total: 0,
+  hours: 168, page: 1, total: 0,
   prevCount: 0, trends: [],
   pipelineOk: true, dataStatus: 'idle',
 };
@@ -1457,7 +1457,7 @@ async function loadStats() {
     document.getElementById('kpiResearch').textContent = d.research_papers ?? '—';
     document.getElementById('kpiFunding').textContent  = d.funding_news    ?? '—';
     document.getElementById('kpiTrends').textContent   = d.trending_count  ?? '—';
-    document.getElementById('heroStat').innerHTML = `<strong>${d.total_today ?? '—'}</strong> articles tracked today`;
+    document.getElementById('heroStat').innerHTML = `<strong>${d.total_today ?? '—'}</strong> articles tracked this week`;
 
     if (d.last_run) {
       const ok       = d.last_run.status === 'success';

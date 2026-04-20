@@ -6,7 +6,7 @@
 set -e
 cd "$(dirname "$0")/backend"
 
-echo "=== AI News Intelligence Agent ==="
+echo "=== AI Pulse — Global AI Intelligence ==="
 echo ""
 
 # Check Python
@@ -26,24 +26,36 @@ echo "[2/3] Installing dependencies..."
 source venv/bin/activate
 pip install -q -r requirements.txt
 
-# Check .env keys
-if grep -q "your_anthropic_key_here" .env 2>/dev/null; then
+# Check .env exists and has required keys
+if [ ! -f ".env" ]; then
   echo ""
-  echo "WARNING: Please edit backend/.env with your real API keys before starting."
-  echo "  ANTHROPIC_API_KEY=sk-ant-..."
-  echo "  NEWS_API_KEY=your_newsapi_key"
+  echo "ERROR: backend/.env not found."
+  echo "  Copy backend/.env.example to backend/.env and fill in your API keys."
   echo ""
-  read -p "Continue anyway? (y/N) " yn
-  [[ "$yn" != "y" ]] && exit 0
+  exit 1
+fi
+
+if ! grep -q "NEWS_API_KEY=." .env 2>/dev/null; then
+  echo ""
+  echo "WARNING: NEWS_API_KEY is not set in backend/.env"
+  echo "  Get a free key at: https://newsapi.org/account"
+  echo ""
+fi
+
+if ! grep -qE "GROQ_API_KEY=.+|OPENAI_API_KEY=.+" .env 2>/dev/null; then
+  echo ""
+  echo "WARNING: No LLM API key found (GROQ_API_KEY or OPENAI_API_KEY) in backend/.env"
+  echo "  Get a free Groq key at: https://console.groq.com/keys"
+  echo ""
 fi
 
 echo "[3/3] Starting server on http://0.0.0.0:8000"
 echo ""
 echo "  Dashboard:  http://localhost:8000"
 echo "  API docs:   http://localhost:8000/docs"
-echo "  News API:   http://localhost:8000/api/news"
+echo "  Health:     http://localhost:8000/api/health"
 echo ""
 echo "Press Ctrl+C to stop."
 echo ""
 
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1
